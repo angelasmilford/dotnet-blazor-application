@@ -1,4 +1,6 @@
-﻿namespace BlazingPizza;
+﻿using System.Globalization;
+
+namespace BlazingPizza;
 
 /// <summary>
 /// Represents a customized pizza as part of an order
@@ -31,8 +33,9 @@ public class Pizza
         return GetBasePrice();
     }
 
-    public string GetFormattedTotalPrice()
+    public string GetFormattedTotalPrice(CultureInfo culture = null)
     {
-        return GetTotalPrice().ToString("0.00");
+        culture ??= new CultureInfo("en-US");        
+        return GetTotalPrice().ToString("C", culture);
     }
 }

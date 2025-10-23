@@ -1,4 +1,5 @@
 using BlazingPizza;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,9 @@ using (var scope = scopeFactory.CreateScope())
     }
 }
 
+var culture = new CultureInfo("en-US");
+CultureInfo.DefaultThreadCurrentCulture = culture;
+CultureInfo.DefaultThreadCurrentUICulture = culture;
 
 app.Run();
 

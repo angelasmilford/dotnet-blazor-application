@@ -1,10 +1,11 @@
+
+
 @page "/"
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
 @inject OrderState OrderState
 
 <div class="main">
-  <h1>Blazing Pizzas</h1>
   <ul class="pizza-cards">
     @if (specials != null)
     {
@@ -31,35 +32,35 @@
 }
 
 <div class="sidebar">
-    @if (order.Pizzas.Any())
-    {
-        <div class="order-contents">
-            <h2>Your order</h2>
+  @if (order.Pizzas.Any())
+  {
+    <div class="order-contents">
+      <h2>Your order</h2>
 
-            @foreach (var configuredPizza in order.Pizzas)
-            {
-              <div class="cart-item">
-                  <a @onclick="@(() => OrderState.RemoveConfiguredPizza(configuredPizza))" class="delete-item">x</a>
-                  <div class="title">@(configuredPizza.Size)" @configuredPizza.Special.Name</div>
-                  <div class="item-price">
-                      @configuredPizza.GetFormattedTotalPrice()
-                  </div>
-              </div>
-            }
+      @foreach (var configuredPizza in order.Pizzas)
+      {
+        <div class="cart-item">
+          <a @onclick="@(() => OrderState.RemoveConfiguredPizza(configuredPizza))" class="delete-item">x</a>
+          <div class="title">@(configuredPizza.Size)" @configuredPizza.Special.Name</div>
+          <div class="item-price">
+            @configuredPizza.GetFormattedTotalPrice()
+          </div>
         </div>
-    }
-    else
-    {
-        <div class="empty-cart">Choose a pizza<br>to get started</div>
-    }
-
-    <div class="order-total @(order.Pizzas.Any() ? "" : "hidden")">
-        Total:
-        <span class="total-price">@order.GetFormattedTotalPrice()</span>
-        <a href="checkout" class="@(OrderState.Order.Pizzas.Count == 0 ? "btn btn-warning disabled" : "btn btn-warning")">
-            Order >
-        </a>
+      }
     </div>
+  }
+  else
+  {
+    <div class="empty-cart">Choose a pizza<br>to get started</div>
+  }
+
+  <div class="order-total @(order.Pizzas.Any() ? "" : "hidden")">
+    Total:
+    <span class="total-price">@order.GetFormattedTotalPrice()</span>
+    <a href="checkout" class="@(OrderState.Order.Pizzas.Count == 0 ? "btn btn-warning disabled" : "btn btn-warning")">
+      Order >
+    </a>
+  </div>
 </div>
 
 @code {
@@ -68,7 +69,7 @@
 
   protected override async Task OnInitializedAsync()
   {
-      specials = await HttpClient.GetFromJsonAsync<List<PizzaSpecial>>(NavigationManager.BaseUri + "specials");
+    specials = await HttpClient.GetFromJsonAsync<List<PizzaSpecial>>(NavigationManager.BaseUri + "specials");
   }
 }
 		
